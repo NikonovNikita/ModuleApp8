@@ -2,40 +2,27 @@
 {
     internal class BinaryExperiment
     {
-        const string SettingsFileName = "Settings.cfg";
-
-        public static void WriteValues()
+        readonly string path = @"\Users\Никонов\OneDrive\Рабочий стол\BinaryFile.bin";
+        
+        public void ReadValues()
         {
-            using (BinaryWriter writer = new(File.Open(SettingsFileName, FileMode.Create)))
+            if (File.Exists(path))
             {
-                writer.Write(20.666F);
-                writer.Write(@"Тестовая строка");
-                writer.Write(55);
-                writer.Write(false);
-            }
-        }
-        public static void ReadValues()
-        {
-            float FloatValue;
-            string StringValue;
-            int IntValue;
-            bool BooleanValue;
-
-            if (File.Exists(SettingsFileName))
-            {
-                using (BinaryReader reader = new BinaryReader(File.Open(SettingsFileName, FileMode.Open)))
+                string ValueString;
+                using (BinaryReader reader = new BinaryReader(File.Open(path, FileMode.Open)))
                 {
-                    FloatValue = reader.ReadSingle();
-                    StringValue = reader.ReadString();
-                    IntValue = reader.ReadInt32();
-                    BooleanValue = reader.ReadBoolean();
+                    ValueString = reader.ReadString();
+                    Console.WriteLine("Из файла считано:");
+                    Console.WriteLine(ValueString);
                 }
-                Console.WriteLine("Из файла считано:");
-
-                Console.WriteLine("Дробь: " + FloatValue);
-                Console.WriteLine("Строка: " + StringValue);
-                Console.WriteLine("Целое: " + IntValue);
-                Console.WriteLine("Булево значение " + BooleanValue);
+            }
+            else { Console.WriteLine("Неверный путь? Или шо"); }
+        }
+        public void WriteValues()
+        {
+            using(BinaryWriter writer =  new BinaryWriter(File.Open(path, FileMode.Open)))
+            {
+                writer.Write($"Файл изменен {DateTime.Now} на компьютере с ОС {Environment.OSVersion}");
             }
         }
 

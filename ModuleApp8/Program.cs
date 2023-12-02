@@ -5,8 +5,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        BinaryExperiment.WriteValues();
-        BinaryExperiment.ReadValues();
+        BinaryExperiment experiment = new BinaryExperiment();
+        experiment.WriteValues();
+        experiment.ReadValues();
         
     }
 
